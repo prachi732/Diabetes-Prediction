@@ -1,3 +1,18 @@
+import streamlit as st
+import pandas as pd
+import numpy as np
+import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pickle
+
+pickle_in = open('regressor.pickle', 'rb')
+classifier = pickle.load(pickle_in)
+
+
+
 st.sidebar.header('Diabetes Prediction')
 select = st.sidebar.selectbox('Select Form', ['Form 1'], key='1')
 if not st.sidebar.checkbox("Hide", True, key='1'):
