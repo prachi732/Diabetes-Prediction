@@ -1,38 +1,36 @@
+  
 import streamlit as st
-import pandas as pd
-import numpy as np
-import plotly.express as px
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
 import pickle
+ 
 
-pickle_in = open('regressor.pkl', 'rb')
-classifier = pickle.load(pickle_in)
 
-st.sidebar.header('Diabetes Prediction')
-select = st.sidebar.selectbox('Select Form', ['Form 1'], key='2')
-if not st.sidebar.checkbox("Hide", True, key='2'):
-    st.title('Diabetes Prediction')
-    name = st.text_input("Name:")
-    pregnancy = st.number_input("No. of times pregnant:")
-    glucose = st.number_input("Plasma Glucose Concentration :")
-    bp =  st.number_input("Diastolic blood pressure (mm Hg):")
-    skin = st.number_input("Triceps skin fold thickness (mm):")
-    insulin = st.number_input("2-Hour serum insulin (mu U/ml):")
-    bmi = st.number_input("Body mass index (weight in kg/(height in m)^2):")
-    dpf = st.number_input("Diabetes Pedigree Function:")
-    age = st.number_input("Age:")
+st.title("Predicting Diabetes")
+st.header("Input")
 
-    submit = st.button('Predict')
+def predict():
+    try:
+        P=st.number_input("Pregnancies")
+        G=st.number_input("Glucose")
+        B=st.number_input("BloodPressure")
+        S=st.number_input("SkinThickness")
+        I=st.number_input("Insulin")
+        BM=st.number_input("BMI")
+        D=st.number_input("DiabetesPedigreeFunction(Based on Family history)")
+        A=st.number_input("Age")
+        value=[P,G,B,S,I,BM,D,A]
+        f='regressor.pickle'
+        model=pickle.load(open(f,'rb'))
+        if st.button('Predict'):
+            p=model.predict([value])
+             
+            if p[0]==0:
+                st.success('You have no signs of Diabetes')
+                st.balloons()
+            else:
+                st.success('You must consulta doctor')
+    except:
+        st.exception('There is some exception')
 
-    if submit:
-        prediction = classifier.predict([[pregnancy, glucose, bp, skin, insulin, bmi, dpf, age]])
-        if prediction == 0:
-            st.write('Congratulation',name,'You are not diabetic')
-        else:
-            st.write(name,"Looks like you might need assistance ")
+    
+
+predict()
