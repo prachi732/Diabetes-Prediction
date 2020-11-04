@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from PIL import Image
+
 import streamlit as st
 
 #Create a title and sub-title
@@ -12,8 +12,7 @@ Detect if someone has diabetes using machine learning and python
 """)
 
 #Open display image
-image = Image.open("cover.png")
-st.image(image=image, caption='ML', use_column_width=True)
+
 
 #Get the data
 df = pd.read_csv('diabetes.csv')
@@ -90,5 +89,5 @@ st.write(
 prediction = RandomForestClassifier.predict(user_input)
 
 #Set a subheader and display the classification
-st.subheader('Classification: ')
+
 st.write(prediction)
