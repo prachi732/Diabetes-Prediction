@@ -1,56 +1,38 @@
-import pandas as pd
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from PIL import Image
 import streamlit as st
+import pandas as pd
+import numpy as np
+import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+import pickle
 
+pickle_in = open('regressor.pickle', 'rb')
+classifier = pickle.load(pickle_in)
 
+st.sidebar.header('Diabetes Prediction')
+select = st.sidebar.selectbox('Select Form', ['Form 1'], key='2')
+if not st.sidebar.checkbox("Hide", True, key='2'):
+    st.title('Diabetes Prediction(Only for females above 21years of Age)')
+    name = st.text_input("Name:")
+    pregnancy = st.number_input("No. of times pregnant:")
+    glucose = st.number_input("Plasma Glucose Concentration :")
+    bp =  st.number_input("Diastolic blood pressure (mm Hg):")
+    skin = st.number_input("Triceps skin fold thickness (mm):")
+    insulin = st.number_input("2-Hour serum insulin (mu U/ml):")
+    bmi = st.number_input("Body mass index (weight in kg/(height in m)^2):")
+    dpf = st.number_input("Diabetes Pedigree Function:")
+    age = st.number_input("Age:")
 
+    submit = st.button('Predict')
 
-df = pd.read_csv('diabetes.csv')
-
-
-X = df.iloc[:, 0:8].values  
-Y = df.iloc[:, -1].values  
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.25, random_state=0)
-
-
-def get_user_input():
-    pregnancies = st.sidebar.slider('Number of times Pregnant', 0, 15, 1)  
-    glucose = st.sidebar.slider('Glucose Level', 0, 199, 110) 
-    blood_pressure = st.sidebar.slider('Blood Pressure', 0, 140, 72) 
-    skin_thickness = st.sidebar.slider('Skin Thickness', 0, 99, 23) 
-    insulin = st.sidebar.slider('Insulin', 0, 126, 100) 
-    bmi = st.sidebar.slider('BMI', 0.0, 50.0, 21.5) 
-    dpf = st.sidebar.slider('DPF', 0.0, 2.49, 0.3725) 
-    age = st.sidebar.slider('AGE', 18, 99, 30) 
-
-    # Kullanıcıdan alınan değerlerin bir sözlük (dictionary) yapısında anahtar-değer (key-value) çiftleri şeklinde kayıt altına alınması
-    user_data = {'pregnancies': pregnancies, 'glucose': glucose, 'blood_pressure': blood_pressure, 'skin_thickness': skin_thickness, 'insulin': insulin, 'bmi': bmi, 'dpf': dpf, 'age': age}
-    # Kullanıcı verisinin dataframe'e dönüştürülmesi
-    features = pd.DataFrame(user_data, index=[0])
-    return features
-
-# Kullanıcının girdiği değerleri bir değişkende tutmak
-user_input = get_user_input()  # user_input değişkeni kullanıcı girdilerini görüntülemek için kullanılacak
-
-# Web uygulamasına alt başlık oluşturma ve kullanıcı girdilerini görüntüleme
-st.subheader('INPUT:')
-st.write(user_input)
-
-# Yapay Zeka modelini oluşturup eğitmek
-RandomForestClassifier = RandomForestClassifier()
-RandomForestClassifier.fit(X_train, Y_train)
-
-# Web uygulamasına alt başlık oluşturma ve model metriklerini (performansını) görüntüleme
-
-# Modeli Y_test veri setine göre test eder ve RandomForestClassifier modeline X_test veri setini vererek, Y_test'deki değerleri tahmin etme doğruluk puanını belirler
-st.write('%' + str(accuracy_score(Y_test, RandomForestClassifier.predict(X_test)) * 100))  # yüzdelik değer elde etmek için 100 ile çarpıldı
-
-
-prediction = RandomForestClassifier.predict(user_input)
-
-# Web uygulamasına alt başlık oluşturma ve sınıflandırmayı (şeker hastası mı değil mi) gösterme
-
-st.write(prediction)
+    if submit:
+        prediction = classifier.predict([[pregnancy, glucose, bp, skin, insulin, bmi, dpf, age]])
+        if prediction == 0:
+            st.write('Congratulation',name,'You are not diabetic')
+        else:
+            st.write(name," we are really sorry to say but it seems like you are Diabetic. But don't lose hope we have suggestions for you:")
