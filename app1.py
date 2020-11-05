@@ -76,7 +76,7 @@ st.write(user_input)
 RandomForestClassifier = RandomForestClassifier()
 RandomForestClassifier.fit(X_train, Y_train)
 st.subheader("Confusion Matrix")
-fig=plot_confusion_matrix(RandomForestClassifier, x_test, y_test, display_labels = class_names)
+fig=plot_confusion_matrix(RandomForestClassifier, x_test, y_test, display_labels =['Diabetic','Not Diabetic'])
 st.pyplot(fig)
 
 #Show the models metrics
