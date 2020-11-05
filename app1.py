@@ -96,7 +96,7 @@ submit = st.button('Predict')
 if submit:
   prediction = RandomForestClassifier.predict(user_input)
   if prediction == 0:
-    st.subheader('Congratulations You are not diabetic')
+    st.subheader('Congratulations!You are not diabetic')
             
   else:
     st.subheader("It's better to consult a Doctor")      
