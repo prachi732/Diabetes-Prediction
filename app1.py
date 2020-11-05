@@ -86,14 +86,14 @@ st.write(
     '%')
 
 #Store the models predictions in a variable
-prediction = RandomForestClassifier.predict(user_input)
+
 
 #Set a subheader and display the classification
 
 submit = st.button('Predict')
 
 if submit:
-  prediction = classifier.predict([[pregnancy, glucose, bp, skin, insulin, bmi, dpf, age]])
+  prediction = RandomForestClassifier.predict(user_input)
   if prediction == 0:
     st.write('Congratulation',name,'You are not diabetic')
             
