@@ -98,7 +98,7 @@ if submit:
     st.write('Congratulations You are not diabetic')
             
   else:
-    st.write("It's better to cpnsult a Doctor")      
+    st.write("It's better to consult a Doctor")      
             
   
         
