@@ -83,7 +83,7 @@ st.write('Confusion matrix: ', cm)
 #Show the models metrics
 st.subheader('Model Test Accuracy Score:')
 st.write(
-    str(accuracy_score(Y_test, RandomForestClassifier.predict(X_test)) * 100) +
+    str(accuracy_score(Y_test, RandomForestClassifier.predict(X_test)).round(2) * 100) +
     '%')
 
 #Store the models predictions in a variable
