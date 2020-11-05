@@ -27,17 +27,14 @@ st.dataframe(df)
 st.write(df.describe())
 
 #Show the data as a chart
-chart = st.bar_chart(df)
+
 
 #Split the data into independent 'X' and dependent 'Y' variables
 X = df.iloc[:, 0:8].values
 Y = df.iloc[:, -1].values
 
 #Split the data set into 75% Training and 25% Testing
-X_train, X_test, Y_train, Y_test = train_test_split(X,
-                                                    Y,
-                                                    test_size=0.25,
-                                                    random_state=0)
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.2,random_state=0)
 
 
 #Get the feature input from the user
@@ -78,6 +75,9 @@ st.write(user_input)
 #Create and train the model
 RandomForestClassifier = RandomForestClassifier()
 RandomForestClassifier.fit(X_train, Y_train)
+st.subheader("Confusion Matrix")
+fig=plot_confusion_matrix(RandomForestClassifier, x_test, y_test, display_labels = class_names)
+st.pyplot(fig)
 
 #Show the models metrics
 st.subheader('Model Test Accuracy Score:')
@@ -95,10 +95,10 @@ submit = st.button('Predict')
 if submit:
   prediction = RandomForestClassifier.predict(user_input)
   if prediction == 0:
-    st.write('Congratulations You are not diabetic')
+    st.subheader('Congratulations You are not diabetic')
             
   else:
-    st.write("It's better to consult a Doctor")      
+    st.subheader("It's better to consult a Doctor")      
             
   
         
