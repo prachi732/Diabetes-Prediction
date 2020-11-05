@@ -95,10 +95,10 @@ submit = st.button('Predict')
 if submit:
   prediction = RandomForestClassifier.predict(user_input)
   if prediction == 0:
-    st.write('Congratulation',name,'You are not diabetic')
+    st.write('Congratulations You are not diabetic')
             
   else:
-    st.write(name," we are really sorry to say but it seems like you are Diabetic. But don't lose hope we have suggestions for you:")      
+    st.write("It's better to cpnsult a Doctor")      
             
   
         
