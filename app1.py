@@ -73,7 +73,7 @@ st.subheader('User Input:')
 st.write(user_input)
 
 #Create and train the model
-RandomForestClassifier = RandomForestClassifier()
+RandomForestClassifier = RandomForestClassifier(n_estimators=100)
 RandomForestClassifier.fit(X_train, Y_train)
 st.subheader("Confusion Matrix")
 from sklearn.metrics import confusion_matrix
