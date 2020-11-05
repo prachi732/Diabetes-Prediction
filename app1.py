@@ -76,7 +76,8 @@ st.write(user_input)
 RandomForestClassifier = RandomForestClassifier()
 RandomForestClassifier.fit(X_train, Y_train)
 st.subheader("Confusion Matrix")
-st.text('Model Report:\n ' + classification_report(Y_test,RandomForestClassifier.predict(X_test)))
+cm=confusion_matrix(Y_test,RandomForestClassifier.predict(X_test))
+st.write('Confusion matrix: ', cm)
 
 #Show the models metrics
 st.subheader('Model Test Accuracy Score:')
