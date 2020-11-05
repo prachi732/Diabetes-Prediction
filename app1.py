@@ -8,7 +8,7 @@ import streamlit as st
 #Create a title and sub-title
 st.write("""
 # Diabetes Detection
-Detect if someone has diabetes using machine learning and python
+A WEB APP to predict signs of Diabetes
 """)
 
 #Open display image
@@ -76,6 +76,7 @@ st.write(user_input)
 RandomForestClassifier = RandomForestClassifier()
 RandomForestClassifier.fit(X_train, Y_train)
 st.subheader("Confusion Matrix")
+from sklearn.metrics import confusion_matrix
 cm=confusion_matrix(Y_test,RandomForestClassifier.predict(X_test))
 st.write('Confusion matrix: ', cm)
 
